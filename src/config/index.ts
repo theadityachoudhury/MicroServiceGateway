@@ -12,6 +12,7 @@ interface AppConfig {
     AUTH_SERVICE_URL: string;
     GYM_SERVICE_URL: string;
     BOOKING_SERVICE_URL: string;
+    JWT_SECRET?: string;
 }
 
 /**
@@ -23,6 +24,7 @@ const config: AppConfig = {
     AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL || 'http://localhost:3001',
     GYM_SERVICE_URL: process.env.GYM_SERVICE_URL || 'http://localhost:3002',
     BOOKING_SERVICE_URL: process.env.BOOKING_SERVICE_URL || 'http://localhost:3003',
+    JWT_SECRET: process.env.JWT_SECRET
 };
 
 /** 
@@ -35,6 +37,7 @@ const requiredVars = {
     AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL,
     GYM_SERVICE_URL: process.env.GYM_SERVICE_URL,
     BOOKING_SERVICE_URL: process.env.BOOKING_SERVICE_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
 };
 
 const checkRequiredVars = () => {

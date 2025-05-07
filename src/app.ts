@@ -2,15 +2,18 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { errorHandler } from './middlewares/errorHandler';
+import { errorHandler } from './middlewares/errorHandler.middleware';
 import { existsSync, mkdirSync } from 'fs';
-import { requestLogger } from './middlewares/logger';
+import { requestLogger } from './middlewares/logger.middleware';
 import logger from './config/logger';
 import authRoute from './routes/auth.route';
+import gymRoute from './routes/gym.route';
 import healthRoute from './routes/health.route';
 import { customRequest } from './types';
 import { getConfig } from './config';
 import corsConfig from './utils/cors';
+import routeValidator from './middlewares/routeValidator.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 
 if (!existsSync('./logs')) {
     mkdirSync('./logs');
@@ -36,7 +39,10 @@ logger.info(`API Gateway initializing`, {
 //health check route
 app.use('/health', healthRoute);
 
-app.use('/api/auth', authRoute)
+app.use(routeValidator);
+app.use(authMiddleware);
+app.use('/api/auth', authRoute);
+app.use('/api', gymRoute);
 
 
 // 404 route
